@@ -143,9 +143,8 @@
 
         .item-header {
             display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 8px;
+            flex-direction: column; /* 修改：将左右排列改为上下排列 */
+            margin-bottom: 6px;
         }
 
         .item-title {
@@ -170,9 +169,8 @@
         .item-date {
             color: var(--text-muted);
             font-size: 0.9rem;
-            text-align: right;
-            flex-shrink: 0;
-            margin-left: 15px;
+            text-align: left; /* 修改：靠左对齐 */
+            margin-top: 4px;  /* 修改：增加一点顶部间距 */
         }
 
         ul {
@@ -280,20 +278,10 @@
             opacity: 1;
             bottom: 120%;
         }
-
-        @media (max-width: 768px) {
-            .item-header {
-                flex-direction: column;
-            }
-            .item-date {
-                text-align: left;
-                margin-left: 0;
-                margin-top: 4px;
-            }
-        }
     </style>
 </head>
-<body class="lang-en"> <div class="container">
+<body class="lang-en"> 
+    <div class="container">
         <div class="header-controls">
             <button class="lang-toggle" onclick="toggleLanguage()">
                 <span class="en">切换至中文</span>
@@ -363,8 +351,8 @@
                 </p>
             </div>
             <p class="item-subtitle">
-                <span class="en">Exchange | BEcon&Fin: VC & PE, NLP in Finance & FinTech</span>
-                <span class="zh">交换 | 经济与金融学学士：VC&PE，金融NLP，FinTech</span>
+                <span class="en">Faculty of Business and Economics, BEcon&Fin: VC & PE, NLP and Text Analytics in Finance & FinTech</span>
+                <span class="zh">经管学院经济与金融学学士：VC&PE，金融与金融科技NLP与文本分析，FinTech</span>
             </p>
         </div>
 
@@ -564,7 +552,7 @@
                     <a href="mailto:chinming_he@smail.nju.edu.cn" class="social-icon">
                         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                     </a>
-                    <span class="tooltip">chinming_he@*****.***.edu.cn</span>
+                    <span class="tooltip">chinming_he@smail.nju.edu.cn</span>
                 </div>
 
                 <div class="icon-wrapper">
