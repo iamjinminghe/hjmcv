@@ -3,602 +3,506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>He Jinming | Personal Website</title>
+    <title>He Jinming | Portfolio</title>
+    <meta name="description" content="Personal portfolio of He Jinming.">
+    
     <style>
-        /* 全局变量设定主色调与排版 */
+        /* CSS Variables */
         :root {
-            --primary: #2c3e50; /* 主色调：雅致石板蓝 */
-            --primary-light: #34495e;
-            --accent: #3b82f6; /* 强调色：现代科技蓝 */
-            --bg: #f8fafc;
+            --bg-color: #fcfcfc;
+            --text-main: #1a1a1a;
+            --text-muted: #52525b;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
             --card-bg: #ffffff;
-            --text-main: #334155;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
+            --border-color: #e4e4e7;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --transition-speed: 0.3s;
         }
 
+        /* Base Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg);
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            transition: all 0.3s ease;
+            scroll-behavior: smooth;
         }
 
-        /* 语言显示控制 */
-        body.lang-en .zh { display: none; }
-        body.lang-zh .en { display: none; }
+        /* Language Toggle Logic */
+        .zh { display: none; }
+        body[data-lang="zh"] .zh { display: inline-block; }
+        body[data-lang="zh"] .en { display: none; }
+        body[data-lang="zh"] div.zh, body[data-lang="zh"] p.zh, body[data-lang="zh"] h1.zh, body[data-lang="zh"] h2.zh, body[data-lang="zh"] h3.zh, body[data-lang="zh"] h4.zh { display: block; }
+        body[data-lang="zh"] li.zh { display: list-item; }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
+        /* Typography */
+        h1, h2, h3, h4 { font-weight: 600; line-height: 1.2; }
+        a { color: var(--accent-color); text-decoration: none; transition: color var(--transition-speed); }
+        a:hover { color: var(--accent-hover); }
+
+        /* Layout & Container */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(252, 252, 252, 0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
         }
-
-        /* 顶部导航与语言切换 */
-        .header-controls {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
-        }
-
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; }
+        .nav-links a:hover { color: var(--text-main); }
         .lang-toggle {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: background-color 0.2s;
+            background: none; border: 1px solid var(--border-color);
+            padding: 0.4rem 1rem; border-radius: 20px; cursor: pointer;
+            font-size: 0.8rem; font-weight: 600; color: var(--text-main);
+            transition: all var(--transition-speed);
+        }
+        .lang-toggle:hover { background: var(--border-color); }
+
+        /* Sections & Spacing */
+        section { 
+            padding: 5rem 2rem 6rem 2rem !important;
+            border-bottom: 1px solid var(--border-color); 
+        }
+        section:last-of-type { border-bottom: none; }
+        .section-header { margin-bottom: 2.5rem; }
+        .section-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        .section-title { font-size: 2.2rem; color: var(--text-main); }
+
+        /* Hero Section */
+        .hero { padding-top: 13rem !important; padding-bottom: 8rem; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        .hero h1 { font-size: 3.5rem; letter-spacing: -0.02em; margin-bottom: 2rem; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin-bottom: 2.5rem; }
+        .btn-primary { display: inline-block; background: var(--text-main); color: #fff; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 500; margin-right: 1rem; transition: background 0.3s; }
+        .btn-primary:hover { background: #333; color: #fff; }
+        .btn-secondary { display: inline-block; color: var(--text-main); font-weight: 500; transition: color 0.3s; }
+        .btn-secondary:hover { color: var(--accent-color); }
+
+        /* Badge Styling (About Me 技能标签) */
+        .badge-container { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2rem; }
+        .badge {
+            font-size: 0.9rem; padding: 0.4rem 1rem;
+            background: rgba(37, 99, 235, 0.06);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            color: var(--accent-color);
+            border-radius: 20px; font-weight: 500;
+            display: flex; align-items: center; gap: 0.4rem;
         }
 
-        .lang-toggle:hover {
-            background-color: var(--primary-light);
+        /* Card System */
+        .card-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        @media (min-width: 768px) {
+            .card-grid { grid-template-columns: 1fr 1fr; }
         }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.04); border-color: #d4d4d8; }
+        
+        .card-meta { margin-bottom: 1.2rem; }
+        .card-date { font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
+        .card-location { font-size: 0.85rem; color: var(--text-muted); }
+        
+        .card-title { font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .card-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.2rem; font-weight: 500; }
+        .card-body { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: auto; }
 
-        /* 个人信息卡片 (Header) */
-        .profile-header {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border-top: 4px solid var(--primary);
-            margin-bottom: 40px;
-        }
-
-        .profile-info h1 {
-            margin: 0 0 12px 0;
-            color: var(--primary);
-            font-size: 2.4rem;
-        }
-
-        .location-info {
-            color: var(--text-muted);
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .location-info svg {
-            width: 18px;
-            height: 18px;
-            margin-right: 6px;
-            fill: var(--text-muted);
-        }
-
-        /* 经历关键词栏 */
-        .profile-keywords {
-            border-top: 1px solid var(--border);
-            padding-top: 15px;
-            font-size: 0.95rem;
-            color: var(--primary-light);
-            font-weight: 500;
-            line-height: 1.8;
-        }
-
-        .profile-keywords span {
-            display: inline-block;
-        }
-
-        /* 模块标题设计 */
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--primary);
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 10px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            position: relative;
+        /* Highlight box in card (Awards) */
+        .card-award {
+            margin-top: 1.2rem;
+            display: inline-flex;
+            align-self: flex-start;
+            background: #f0fdf4; 
+            color: #166534; 
+            padding: 0.3rem 0.8rem; 
+            border-radius: 8px; 
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(22, 101, 52, 0.1);
         }
         
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 60px;
-            height: 2px;
-            background-color: var(--primary);
-        }
+        /* Tags */
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.2rem; }
+        .tag { background: #f4f4f5; color: var(--text-muted); font-size: 0.75rem; padding: 0.3rem 0.7rem; border-radius: 6px; }
 
-        /* 经历卡片设计 */
-        .item-card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border-left: 3px solid transparent;
-            transition: border-color 0.2s;
+        /* Timeline / Experience */
+        .timeline { border-left: 2px solid var(--border-color); padding-left: 2rem; margin-left: 1rem; }
+        .timeline-item { position: relative; margin-bottom: 3.5rem; }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -2.45rem; top: 0.4rem;
+            width: 12px; height: 12px; background: var(--card-bg);
+            border: 2px solid var(--text-muted); border-radius: 50%;
         }
+        .timeline-item:hover::before { border-color: var(--accent-color); }
+        .timeline-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 600; }
 
-        .item-card:hover {
-            border-left-color: var(--accent);
-        }
+        /* Skills Layout */
+        .skills-container { display: grid; grid-template-columns: 1fr; gap: 2rem; }
+        .skill-category h4 { margin-bottom: 1rem; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
 
-        .item-header {
-            display: flex;
-            flex-direction: column; /* 修改：将左右排列改为上下排列 */
-            margin-bottom: 6px;
-        }
+        /* Footer & Contact Interaction */
+        footer { padding: 6rem 0 4rem 0; background-color: #f8f8f9; border-top: 1px solid var(--border-color); }
+        .footer-content { max-width: 900px; margin: 0 auto; padding: 0 2rem; text-align: center; }
+        .footer-title { font-size: 1.8rem; font-weight: 600; margin-bottom: 3rem; color: var(--text-main); }
+        
+        .contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; margin-bottom: 4rem; }
+        .contact-item { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; min-width: 100px; position: relative; }
+        .contact-icon { width: 56px; height: 56px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); color: var(--text-main); transition: all 0.3s; }
+        .contact-item:hover .contact-icon { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15); color: var(--accent-color); transform: scale(1.05); }
+        .contact-icon svg { width: 26px; height: 26px; fill: currentColor; }
+        
+        .contact-label { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: color 0.3s; }
+        .contact-item:hover .contact-label { color: var(--accent-color); }
+        
+        /* 悬停显示具体账号信息 */
+        .contact-info { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.8rem; font-weight: 600; color: var(--accent-color); opacity: 0; transition: all 0.3s; pointer-events: none; }
+        .contact-item:hover .contact-info { opacity: 1; bottom: -20px; }
+        .contact-item:hover .contact-label { opacity: 0; }
 
-        .item-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin: 0;
-        }
+        .footer-bottom { border-top: 1px solid #e4e4e7; padding-top: 2rem; color: #a1a1aa; font-size: 0.85rem; }
 
-        .item-subtitle {
-            font-style: italic;
-            color: var(--text-muted);
-            margin: 0;
-            font-size: 0.95rem;
-        }
-
-        /* 中文版本下不使用斜体 */
-        .item-subtitle span.zh {
-            font-style: normal;
-        }
-
-        .item-date {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            text-align: left; /* 修改：靠左对齐 */
-            margin-top: 4px;  /* 修改：增加一点顶部间距 */
-        }
-
-        ul {
-            margin: 10px 0 0 0;
-            padding-left: 20px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        /* 页脚与联系方式图标设计 */
-        .site-footer {
-            margin-top: 60px;
-            padding-top: 40px;
-            padding-bottom: 20px;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .footer-title {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .icon-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--card-bg);
-            color: var(--primary);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            cursor: pointer;
-            border: 1px solid var(--border);
-        }
-
-        .social-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: currentColor;
-        }
-
-        .social-icon:hover {
-            background-color: var(--primary);
-            color: white;
-            transform: translateY(-4px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-
-        /* 悬浮提示框 (Tooltip) */
-        .tooltip {
-            visibility: hidden;
-            width: max-content;
-            background-color: var(--primary);
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 6px 12px;
-            position: absolute;
-            z-index: 1;
-            bottom: 130%;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s, bottom 0.3s;
-            font-size: 0.85rem;
-            pointer-events: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .tooltip::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -6px;
-            border-width: 6px;
-            border-style: solid;
-            border-color: var(--primary) transparent transparent transparent;
-        }
-
-        .icon-wrapper:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-            bottom: 120%;
-        }
+        /* Animation */
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="lang-en"> 
-    <div class="container">
-        <div class="header-controls">
-            <button class="lang-toggle" onclick="toggleLanguage()">
-                <span class="en">切换至中文</span>
-                <span class="zh">Switch to English</span>
-            </button>
-        </div>
+<body data-lang="en">
 
-        <div class="profile-header">
-            <div class="profile-info">
-                <h1>
-                    <span class="en">He Jinming</span>
-                    <span class="zh">何金明</span>
-                </h1>
-                <div class="location-info">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                    <span class="en">Pok Fu Lam, Hong Kong</span>
-                    <span class="zh">香港 薄扶林</span>
-                </div>
-                <div class="profile-keywords">
-                    <span class="en">💡 Finance & FinTech &nbsp;|&nbsp; 📊 Management Consulting &nbsp;|&nbsp; 🌱 ESG &nbsp;|&nbsp; 📈 Fixed Income Research</span>
-                    <span class="zh">💡 金融科技 &nbsp;|&nbsp; 📊 管理咨询 &nbsp;|&nbsp; 🌱 ESG &nbsp;|&nbsp; 📈 固收研究</span>
-                </div>
+    <nav>
+        <div class="container nav-content">
+            <a href="#" style="font-weight: 700; color: var(--text-main); font-size: 1.1rem;">
+                <span class="en">He Jinming</span>
+                <span class="zh">何金明</span>
+            </a>
+            <div class="nav-links">
+                <a href="#about"><span class="en">About</span><span class="zh">关于</span></a>
+                <a href="#experience"><span class="en">Experience</span><span class="zh">工作经历</span></a>
+                <a href="#projects"><span class="en">Projects</span><span class="zh">项目经历</span></a>
+                <button class="lang-toggle" onclick="toggleLanguage()">
+                    <span class="en">中文</span>
+                    <span class="zh">English</span>
+                </button>
             </div>
         </div>
+    </nav>
 
-        <h2 class="section-title">
-            <span class="en">🎓 EDUCATIONAL BACKGROUND</span>
-            <span class="zh">🎓 教育背景</span>
-        </h2>
+    <section id="hero" class="hero container reveal">
+        <h1 class="en">Bridging Data Science <br>and Financial Strategy.</h1>
+        <h1 class="zh">连接数据科学<br>与金融战略。</h1>
         
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">Undergraduate: Nanjing University</span>
-                    <span class="zh">本科：南京大学</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Nanjing, September 2023 – June 2027e</span>
-                    <span class="zh">2023.09 – 2027.06e，南京</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Business School, Finance (GPA 4.41/5.0, ranking 14/34)</span>
-                <span class="zh">商学院金融学（GPA 4.41 / 5.0，排名14 / 34）</span>
-            </p>
-            <ul>
-                <li>
-                    <span class="en"><strong>Awards:</strong> the People’s Scholarship (Top 40%; 2024, 2025); 2nd Prize of National Undergraduate Mathematical Competition (2025)</span>
-                    <span class="zh"><strong>奖励：</strong>人民奖学金（前40%；2024，2025），本科生数学竞赛非数学B类二等奖（2025）</span>
-                </li>
-                <li>
-                    <span class="en"><strong>Coursework:</strong> Monetary Finance & Banking (93), Macro-Economics (91), Financial Economics (91), Econometrics (93), Probability Theory & Mathematical Statistics (98), Statistics (95), Linear Algebra (90), Calculus</span>
-                    <span class="zh"><strong>课程：</strong>货币金融学（93），宏观经济学（91），金融经济学（91），计量经济学（93），概率论与数理统计（98），线性代数（90）</span>
-                </li>
-            </ul>
+        <p class="en">I am a senior student at Nanjing University, just finishing my exchange study at HKU Business School. I focus on financial modeling and market analysis, and strive to distill complex data into practical business insights.</p>
+        <p class="zh">我是南京大学在读本科生，刚完成香港大学商学院交换学习。主攻金融建模与市场分析，擅长将繁杂数据提炼为实用商业见解。</p>
+        
+        <div>
+            <a href="#experience" class="btn-primary">
+                <span class="en">Explore My Work</span>
+                <span class="zh">查看工作经历</span>
+            </a>
+            <a href="#contact" class="btn-secondary">
+                <span class="en">Get in touch &rarr;</span>
+                <span class="zh">与我交流 &rarr;</span>
+            </a>
         </div>
+    </section>
 
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">Exchange: The University of Hong Kong</span>
-                    <span class="zh">交换：香港大学</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Hong Kong, January 2026 – May 2026e</span>
-                    <span class="zh">2026.01 – 2026.05e，香港</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Faculty of Business and Economics, BEcon&Fin: VC & PE, NLP and Text Analytics in Finance & FinTech</span>
-                <span class="zh">经管学院经济与金融学学士：VC&PE，金融与金融科技NLP与文本分析，FinTech</span>
-            </p>
-        </div>
-
-        <h2 class="section-title">
-            <span class="en">💼 INTERNSHIP</span>
-            <span class="zh">💼 实习经历</span>
-        </h2>
-
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">The Boston Consulting Group</span>
-                    <span class="zh">波士顿咨询BCG</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Shanghai, December 2025 – June 2026e</span>
-                    <span class="zh">2025.12 – 2026.06e，上海</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Special Part-Time Assistant Program</span>
-                <span class="zh">Special PTA项目</span>
-            </p>
-            <ul>
-                <li>
-                    <span class="en">Formulated and validated a “tightening regulatory enforcement” hypothesis within a growth strategy project for a leading pet food client by deploying Python scraping to aggregate nationwide administrative penalty data from Tian Yan Cha across the pet food sector, which confirmed a significant post-2024 surge in citations and provided the core quantitative evidence for risk-adjusted market entry</span>
-                    <span class="zh">某宠物食品企业的增长战略中，基于对行业合规政策趋势提出监管执法力度显著升级的假设，利用Python爬虫抓取天眼查中宠物食品细分赛道全量公司的行政处罚记录，通过数据分析证实2024年后处罚频率明显增长，为客户提供关键的合规准入与风险避让依据</span>
-                </li>
-                <li>
-                    <span class="en">Executed a competitive benchmarking analysis for a lawnmower robotics client by synthesizing pricing, ratings, and sentiment data from Amazon to identify core product value propositions and customer pain points for strategic internal case studies</span>
-                    <span class="zh">为某割草机器人公司开展在电商平台（如Amazon）竞品的定价、评分与评论数据的基准分析，识别并梳理汇总同类别割草机器人产品的核心卖点与关键痛点，为客户公司形成可用于内部案例拆解的产品洞察与策略建议</span>
-                </li>
-                <li>
-                    <span class="en">Developed a structured competitive landscape for a warehouse robotics firm by integrating expert interview insights with independent Marimekko market modelling and competitor data to produce bilingual strategic deliverables</span>
-                    <span class="zh">参与某仓储机器人企业咨询项目，通过专家访谈深度复盘业务模式与核心优势，并独立构建细分赛道Marimekko市场格局模型，负责查找竞争对手数据并产出中英双语交付件，实现对行业竞争态势的结构化分析与直观可视化呈现</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">Tianfeng Securities Co. Ltd.</span>
-                    <span class="zh">天风证券</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Shanghai, September 2025 – November 2025</span>
-                    <span class="zh">2025.09 – 2025.11，上海</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Intern in Fixed Income Research Group</span>
-                <span class="zh">固收组实习</span>
-            </p>
-            <ul>
-                <li>
-                    <span class="en">Analyzed LGFV (Local Government Financing Vehicle) funding structures by benchmarking costs across trust (~6%), non-standard (~5%) & bank loan (~3%) channels, and published research identifying a shift toward low-cost credit and risk-return rebalancing under fiscal tightening</span>
-                    <span class="zh">动态跟踪ETF及信用市场行情，通过专家访谈及政策梳理剖析省级城投平台融资结构，对比并梳理信托（~6%）、非标（~5%）及银行贷款（~3%）的成本差异，产出1篇推文，揭示财政收紧背景下融资向低成本信贷倾斜的趋势，以及风险收益平衡特征</span>
-                </li>
-            </ul>
-        </div>
-
-        <h2 class="section-title">
-            <span class="en">🔬 PROJECT & RESEARCH EXPERIENCE</span>
-            <span class="zh">🔬 项目与研究经验</span>
-        </h2>
-
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">Smart Logistics & Environmental Performance from the Perspective of Enterprises & Cities</span>
-                    <span class="zh">企业和城市视角下的智慧物流与环境绩效</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Nanjing, October 2024 – November 2025</span>
-                    <span class="zh">2024.10 – 2025.11，南京</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Provincial-Level Project, First Principal Investigator</span>
-                <span class="zh">省级立项，主持人</span>
-            </p>
-            <ul>
-                <li>
-                    <span class="en">Developed a “Company-City” evaluation model using CSMAR manufacturing data (2010–2023) and field study in Jiangning, Nanjing to identify ESG improvements driven by productivity gains and cost contraction, while delivering 10+ analytical charts and a thematic report featuring heterogeneity analysis across firm sizes and regions to secure the Nanjing University “Yinxing Cup” Award</span>
-                    <span class="zh">构建“企业—城市”视角的评估模型，并于南京江宁空港物流园区的实地数据验证智慧物流在降碳、提升企业盈利能力及增强城市运行效率方面的成效，据此完成10+份分析图表与完整社会实践报告，为智慧物流发展提出团队的建议。利用CSMAR数据库2010–2023制造业项目数据评估2016年智慧物流试点政策的成效，识别ESG改善由生产率提升、成本收缩和风险控制优化所驱动，相关成果获得南京大学“银星杯”新人奖</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">The 4th KPMG ESG Case Competition</span>
-                    <span class="zh">2025年第四届毕马威ESG案例分析大赛</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Shanghai, October 2025 – November 2025</span>
-                    <span class="zh">2025.10 – 2025.11，上海</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Semi-finalist, Global Top 2%</span>
-                <span class="zh">半决赛入围（全球前2%）</span>
-            </p>
-            <ul>
-                <li>
-                    <span class="en">Developed a comprehensive Scope 1-3 carbon model for ABC Fashion to identify emission hotspots while proposing a “Traceable QR” system & ESG evaluation platform that digitized supply chain transparency to drive measurable Scope 3 reductions & cost optimizations</span>
-                    <span class="zh">构建ABC Fashion公司Scope 1-3 评估模型以识别核心排放源，并针对性提出“溯源二维码”及ESG评价平台方案，从底层实现供应链透明化，有效驱动范围三端的减排路径规划与合规成本优化，助力品牌实现供应链绿色战略转型与可持续发展目标</span>
-                </li>
-            </ul>
+    <section id="about" class="container reveal">
+        <div class="section-header">
+            <span class="section-label"><span class="en">I. Profile</span><span class="zh">I. 简介</span></span>
+            <h2 class="section-title"><span class="en">About Me</span><span class="zh">关于我</span></h2>
         </div>
         
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">The 2025 “Bain Cup” Case Competition</span>
-                    <span class="zh">2025年“贝恩杯”咨询启航案例大赛</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Beijing, May 2025</span>
-                    <span class="zh">2025.05，北京</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Outstanding Case Report, Top 10%</span>
-                <span class="zh">优秀案例（全球前10%）</span>
-            </p>
-            <ul>
-                <li>
-                    <span class="en">Analyzed AI-enabled ESG consulting in the renewable energy sector using CSMAR, Chindices, and IIGF data, and developed a framework of “Market Competition Analysis > Dual-line strategy > Strategy implementation” to formulate growth strategies for client company</span>
-                    <span class="zh">负责AI赋能新能源行业ESG咨询市场调研，运用国泰安、华证指数、绿金院等平台进行数据收集与信息搜集，完成“市场竞争分析—‘双线’战略—策略实施”的框架模型搭建，为客户公司制定增长策略</span>
-                </li>
-                <li>
-                    <span class="en">Concluded that client company should develop online SaaS platforms and set up onsite AI server base stations to achieve their growth goals; visualized analysis conclusions into 16 charts using Thinkcell & Python, and collaborated to complete 21-page slides</span>
-                    <span class="zh">通过行业数据分析，得出客户公司应开发线上SaaS平台、设立线下AI服务器基站，以实现其增长目标，并使用Thinkcell、Python等工具将分析结论可视化为16张图表，直击AI发展下咨询行业痛点，并据此合作完成21页PPT</span>
-                </li>
-            </ul>
+        <div class="badge-container">
+            <span class="badge">💼 <span class="en">Consulting</span><span class="zh">战略咨询</span></span>
+            <span class="badge">📊 <span class="en">Financial Modelling</span><span class="zh">金融建模</span></span>
+            <span class="badge">💻 <span class="en">Data Science</span><span class="zh">数据科学</span></span>
+            <span class="badge">🌱 <span class="en">ESG Integration</span><span class="zh">ESG分析</span></span>
+            <span class="badge">🪄 <span class="en">Vibe Coding</span><span class="zh">Vibe Coding</span></span>
         </div>
 
-        <div class="item-card">
-            <div class="item-header">
-                <p class="item-title">
-                    <span class="en">China-Malaysia Field Research and Academic Training Program</span>
-                    <span class="zh">中马“一带一路”科考与科研训练项目</span>
-                </p>
-                <p class="item-date">
-                    <span class="en">Malaysia, August 2025</span>
-                    <span class="zh">2025.08，马来西亚</span>
-                </p>
-            </div>
-            <p class="item-subtitle">
-                <span class="en">Global Scientific Expedition Project, Top 10 Team</span>
-                <span class="zh">全球科考（校级重点立项&十佳团队）</span>
-            </p>
-            <ul>
-                <li>
-                    <span class="en">Visited 10+ enterprises, 3 government agencies and 2 universities in Penang, Kuala Lumpur & Kuantan; combined “cloud” research to study labor use and technology transformation of Chinese enterprises going global under the "Belt and Road" initiative</span>
-                    <span class="zh">走访包含制造业和服务业等多个行业的10余家在马中资企业、3个政府部门、2所高校/科研院所，结合近8万字“云”调研成果，开展“一带一路”框架下中企出海劳动力使用与技术转移研究，分析马来西亚劳动力市场结构失衡的问题，得出中资企业出海需改变旧有观念，做到“三合”（合规、合理、合作）海外市场的结论</span>
-                </li>
-                <li>
-                    <span class="en">Concluding that they need to prioritize compliance, rationality and cooperation in overseas markets, and co-authored a 40k-word thematic report and produced a 7-min vlog as a core member of the “Labor and Technology Transfer” subcommittee</span>
-                    <span class="zh">在项目中担任“中资企业劳动力与技术转移”子课题项目组核心成员，独立撰写科考日志公众号推文1篇（阅读量200+），负责剪辑团队实践总结vlog（时长7分钟，点赞收藏50+），合作完成近4万字专题分析报告1篇</span>
-                </li>
-            </ul>
-        </div>
+        <div style="width: 100%;">
+            <p class="en" style="margin-bottom: 1.2rem;">I am highly motivated by the intersection of traditional finance and modern technological applications. Currently pursuing my studies in Finance at Nanjing University, I actively utilize tools like Python and web scraping to gather alternative data, bringing an empirical edge to strategic consulting and academic research.</p>
+            <p class="zh" style="margin-bottom: 1.2rem;">我对传统金融与现代技术应用的交叉领域充满热情。目前在南京大学攻读金融学，我积极运用 Python 和网络爬虫等工具收集另类数据，为战略咨询和学术研究提供支持。</p>
 
-        <h2 class="section-title">
-            <span class="en">🛠️ SKILLS & OTHERS</span>
-            <span class="zh">🛠️ 技能证书</span>
-        </h2>
-        <div class="item-card">
-            <ul>
-                <li>
-                    <span class="en"><strong>Language:</strong> Mandarin Chinese (Native, Level 2A), English (IELTS: 7.0, CET-6: 564, CET-4: 550)</span>
-                    <span class="zh"><strong>语言：</strong>汉语普通话（二级甲等），英语（IELTS：7.0，CET-6：564，CET-4：550）</span>
-                </li>
-                <li>
-                    <span class="en"><strong>IT:</strong> Maths & Statistics (Python, Web Scraping Analysis, R), Office (Excel, Word, PowerPoint), Others (Adobe PS/PR, Jianying)</span>
-                    <span class="zh"><strong>计算机：</strong>数学&统计学（Python、数据分析与网络爬虫、R），办公类（Excel、Word、PowerPoint），其他（Adobe PS/PR、剪映）</span>
-                </li>
-                <li>
-                    <span class="en"><strong>Skills & Extracurricular:</strong> Mathematical Modelling (2026 MCM/ICM Participant), Vlog (Douyin: iamjmh, with a single work exceeding 11k+ likes). Member of Student Union of Nanjing University (Comprehensive Liaison Department).</span>
-                    <span class="zh"><strong>技能与活动：</strong>计算机二级（WPS），数学建模（2026美赛MCM/ICM），剪辑（抖音账号：iamjmh，单作品点赞最高1.1万+）。南京大学学生会综合联络部成员，曾协助落地学生福利项目。</span>
-                </li>
-            </ul>
+            <p class="en">Whenever exploring market conditions and economic variations, I adopt structured analytical thinking to yield practical and valuable results.</p>
+            <p class="zh">依托严谨分析逻辑研判市场与经济变化，专注产出务实有效的研究结论。</p>
         </div>
+    </section>
 
-        <footer class="site-footer">
-            <h3 class="footer-title">
-                <span class="en">✉️ Get in Touch</span>
-                <span class="zh">✉️ 联系方式</span>
-            </h3>
-            <div class="social-links">
-                
-                <div class="icon-wrapper">
-                    <a href="mailto:chinming_he@smail.nju.edu.cn" class="social-icon">
-                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    </a>
-                    <span class="tooltip">chinming_he@smail.nju.edu.cn</span>
+    <section id="experience" class="container reveal">
+        <div class="section-header">
+            <span class="section-label"><span class="en">II. Career</span><span class="zh">II. 职业轨迹</span></span>
+            <h2 class="section-title"><span class="en">Professional Experience</span><span class="zh">实习经历</span></h2>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date"><span class="en">December 2025 – June 2026*</span><span class="zh">2025年12月 – 2026年06月*</span></div>
+                <h3 class="card-title"><span class="en">The Boston Consulting Group (BCG)</span><span class="zh">波士顿咨询公司（BCG）</span></h3>
+                <div class="card-subtitle"><span class="en">Special Part-Time Assistant Program · Shanghai</span><span class="zh">Special Part-Time Assistant · 上海</span></div>
+                <div class="en card-body">
+                    • <strong>Regulatory Data Mining:</strong> Deployed Python scraping to aggregate nationwide administrative penalty data, confirming a post-2024 surge in citations to guide market entry for a pet food client.<br>
+                    • <strong>Competitive Benchmarking:</strong> Synthesized pricing, ratings, and sentiment data from Amazon to identify product value propositions and customer pain points for a lawnmower robotics client.<br>
+                    • <strong>Market Structuring:</strong> Built detailed Marimekko market landscape models based on expert interviews and competitor data for bilingual strategic deliverables.
                 </div>
-
-                <div class="icon-wrapper">
-                    <a href="https://www.linkedin.com/in/jinming-he-85582b392/" target="_blank" class="social-icon">
-                        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
-                    </a>
-                    <span class="tooltip">
-                        <span class="en">LinkedIn Profile</span>
-                        <span class="zh">我的领英主页</span>
-                    </span>
+                <div class="zh card-body">
+                    • <strong>监管数据挖掘：</strong> 利用 Python 爬取全国行政处罚数据，证实 2024 年后处罚激增，为宠物食品客户提供市场准入的量化合规避让依据。<br>
+                    • <strong>竞品基准分析：</strong> 综合亚马逊的定价、评分和评论情绪数据，为割草机器人客户识别核心产品卖点和客户痛点。<br>
+                    • <strong>市场结构搭建：</strong> 结合专家访谈复盘和竞争对手数据，独立构建细分赛道的 Marimekko 市场格局模型，并输出中英双语战略交付件。
                 </div>
+            </div>
 
-                <div class="icon-wrapper">
-                    <div class="social-icon">
-                        <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            <div class="timeline-item">
+                <div class="timeline-date"><span class="en">September 2025 – November 2025</span><span class="zh">2025年09月 – 2025年11月</span></div>
+                <h3 class="card-title"><span class="en">Tianfeng Securities Co. Ltd.</span><span class="zh">天风证券</span></h3>
+                <div class="card-subtitle"><span class="en">Fixed Income Research Intern · Shanghai</span><span class="zh">固收组实习生 · 上海</span></div>
+                <div class="en card-body">
+                    • Analyzed LGFV (Local Government Financing Vehicle) funding structures by benchmarking costs across trust, non-standard, and bank loan channels.<br>
+                    • Authored and published research identifying a shift toward low-cost credit and risk-return rebalancing under macro fiscal tightening.
+                </div>
+                <div class="zh card-body">
+                    • 通过对比信托（~6%）、非标（~5%）和银行贷款（~3%）等不同渠道的融资成本差异，深度剖析省级城投平台（LGFV）的融资结构。<br>
+                    • 撰写并发表研究推文，揭示在宏观财政紧缩背景下，地方融资向低成本信贷倾斜的趋势及风险收益再平衡特征。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container reveal">
+        <div class="section-header">
+            <span class="section-label"><span class="en">III. Selected Work</span><span class="zh">III. 精选项目</span></span>
+            <h2 class="section-title"><span class="en">Projects & Research</span><span class="zh">科研与项目实践</span></h2>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-meta">
+                    <div class="card-date"><span class="en">May 2025</span><span class="zh">2025年05月</span></div>
+                    <div class="card-location"><span class="en">Beijing</span><span class="zh">北京</span></div>
+                </div>
+                <h3 class="card-title"><span class="en">Bain Cup Case Competition</span><span class="zh">“贝恩杯”咨询启航案例大赛</span></h3>
+                <div class="card-body">
+                    <span class="en">Developed a “Dual-line” growth strategy for AI-enabled ESG consulting in the renewable energy sector utilizing CSMAR, Chindices, and IIGF data.</span>
+                    <span class="zh">利用国泰安、华证指数等数据，为新能源行业的 AI 赋能 ESG 咨询开发“双线”（线上 SaaS + 线下 AI 基站）增长战略。</span>
+                </div>
+                <div class="card-award">
+                    🏆 <span class="en">Top 10% Global</span><span class="zh">全球前 10% 优秀案例</span>
+                </div>
+                <div class="tags">
+                    <span class="tag">Strategy</span> <span class="tag">ESG</span> <span class="tag">Think-cell</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-meta">
+                    <div class="card-date"><span class="en">October 2024 – November 2025</span><span class="zh">2024年10月 – 2025年11月</span></div>
+                    <div class="card-location"><span class="en">Nanjing</span><span class="zh">南京</span></div>
+                </div>
+                <h3 class="card-title"><span class="en">Smart Logistics & Environment</span><span class="zh">智慧物流与环境绩效研究</span></h3>
+                <div class="card-body">
+                    <span class="en">Developed a “Company-City” evaluation model using CSMAR manufacturing data to identify ESG improvements driven by productivity gains.</span>
+                    <span class="zh">构建基于“企业—城市”视角的评估模型，结合 CSMAR 制造业数据与实地调研，验证智慧物流对企业降碳与盈利的成效。</span>
+                </div>
+                <div class="card-award">
+                    ⭐ <span class="en">Principal Investigator</span><span class="zh">省级立项主持人 / 南大“银星杯”</span>
+                </div>
+                <div class="tags">
+                    <span class="tag">Quant Modeling</span> <span class="tag">CSMAR</span> <span class="tag">R</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-meta">
+                    <div class="card-date"><span class="en">April 2026 – May 2026</span><span class="zh">2026年04月 – 2026年05月</span></div>
+                    <div class="card-location"><span class="en">Nanjing</span><span class="zh">南京</span></div>
+                </div>
+                <h3 class="card-title"><span class="en">M&A Restructuring Study</span><span class="zh">资本市场并购重组研究</span></h3>
+                <div class="card-body">
+                    <span class="en">Built a metric framework spanning governance and industry prosperity to evaluate cross-border strategic transformation M&As.</span>
+                    <span class="zh">从治理放权、行业景气度和标的质量三个维度构建计量框架，横向对比同类公司的整合差异以评估跨界战略转型并购。</span>
+                </div>
+                <div class="tags" style="margin-top: 1.2rem;">
+                    <span class="tag">Corporate Finance</span> <span class="tag">M&A</span> <span class="tag">Metrics</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-meta">
+                    <div class="card-date"><span class="en">August 2025</span><span class="zh">2025年08月</span></div>
+                    <div class="card-location"><span class="en">Malaysia</span><span class="zh">马来西亚</span></div>
+                </div>
+                <h3 class="card-title"><span class="en">Field Study on China’s Economy & Investment Development in “Belt and Road” Countries</span><span class="zh">中国经济及其在“一带一路”国家投资发展经验科考与科研训练项目</span></h3>
+                <div class="card-body">
+                    <span class="en">Conducted research across 10+ enterprises. Co-authored a 40k-word report on labor structural imbalances and technology transformation.</span>
+                    <span class="zh">赴马走访 10 余家企业及政府部门。合作撰写近 4 万字专题报告，分析出海中资企业的劳动力结构失衡与技术转移战略。</span>
+                </div>
+                <div class="card-award">
+                    🌍 <span class="en">Top 10 Team</span><span class="zh">南京大学“十佳团队”</span>
+                </div>
+                <div class="tags">
+                    <span class="tag">Field Research</span> <span class="tag">Macro</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="container reveal">
+        <div class="section-header">
+            <span class="section-label"><span class="en">IV. Toolbox</span><span class="zh">IV. 工具箱</span></span>
+            <h2 class="section-title"><span class="en">Technical Skills</span><span class="zh">专业技能</span></h2>
+        </div>
+        
+        <div class="skills-container">
+            <div class="skill-category card">
+                <h4>💻 <span class="en">Data & Programming</span><span class="zh">数据与编程</span></h4>
+                <div class="tags">
+                    <span class="tag">🐍 Python</span> <span class="tag">🕸️ Web Scraping</span> <span class="tag">📈 R Language</span> <span class="tag">📊 Statistics & Econometrics</span> 
+                </div>
+            </div>
+            
+            <div class="skill-category card">
+                <h4>💼 <span class="en">Business & Strategy</span><span class="zh">商业与战略软件</span></h4>
+                <div class="tags">
+                    <span class="tag">💡 Think-cell</span> <span class="tag">📗 Advanced Excel</span> <span class="tag">🗄️ CSMAR / Wind Databases</span> 
+                </div>
+            </div>
+
+            <div class="skill-category card">
+                <h4>🌐 <span class="en">Languages</span><span class="zh">语言能力</span></h4>
+                <div class="tags">
+                    <span class="tag"><span class="en">Mandarin (Native)</span><span class="zh">汉语普通话 (母语)</span></span> <span class="tag"><span class="en">English (IELTS: 7.0)</span><span class="zh">英语 (雅思 7.0)</span></span> 
+                </div>
+            </div>
+            
+            <div class="skill-category card">
+                <h4>🏆 <span class="en">Extracurricular</span><span class="zh">课外活动</span></h4>
+                <div style="font-size: 0.9rem; color: var(--text-muted);">
+                    <span class="en">🤝 Core Member, Student Union of Nanjing University. Coordinated partnerships with 30+ local merchants.</span>
+                    <span class="zh">🤝 南京大学学生会综合联络部核心成员。与30余家本地商户达成协同合作。</span> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="container reveal">
+        <div class="section-header">
+            <span class="section-label"><span class="en">V. Academics</span><span class="zh">V. 学历</span></span>
+            <h2 class="section-title"><span class="en">Education</span><span class="zh">教育背景</span></h2>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date"><span class="en">January 2026 – May 2026</span><span class="zh">2026年01月 – 2026年05月</span></div>
+                <h3 class="card-title"><span class="en">The University of Hong Kong (Exchange) </span><span class="zh">香港大学（交换）</span></h3>
+                <div class="card-subtitle"><span class="en">Exchange Student, Faculty of Business and Economics (Business School)</span><span class="zh">经管学院，交换生</span></div>
+                <div class="en card-body"><strong>Coursework:</strong> Venture Capital & Private Equity, NLP in Finance, FinTech.</div>
+                <div class="zh card-body"><strong>核心课程：</strong>风险投资与私募股权（VC&PE）、金融自然语言处理（NLP）、金融科技（FinTech）。</div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date"><span class="en">September 2023 – June 2027*</span><span class="zh">2023年09月 – 2027年06月*</span></div>
+                <h3 class="card-title"><span class="en">Nanjing University (Undergraduate)</span><span class="zh">南京大学（本科）</span></h3>
+                <div class="card-subtitle"><span class="en">Bachelor of Economics, Major in Finance (Business School)</span><span class="zh">商学院，金融学本科</span></div>
+                <div class="en card-body">
+                    • <strong>Awards:</strong> People’s Scholarship (Top 40%); 2nd Prize of National Undergraduate Mathematical Competition.<br>
+                    • <strong>Coursework:</strong> Probability (98), Statistics (95), Econometrics (93), Monetary Finance (93).
+                </div>
+                <div class="zh card-body">
+                    • <strong>荣誉奖项：</strong> 人民奖学金（前 40%）；本科生数学竞赛非数学 B 类二等奖。<br>
+                    • <strong>核心课程：</strong> 概率论与数理统计（98）、统计学（95）、计量经济学（93）、货币金融学（93）。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content reveal">
+            <h2 class="footer-title">
+                <span class="en">Let’s Connect</span>
+                <span class="zh">期待与您交流</span>
+            </h2>
+            
+            <div class="contact-grid">
+                <a href="https://www.linkedin.com/in/jinming-he-85582b392/" target="_blank" class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                     </div>
-                    <span class="tooltip">+86 182-****-****</span>
-                </div>
+                    <span class="contact-label">LinkedIn</span>
+                    <span class="contact-info">Jinming He</span>
+                </a>
 
-                <div class="icon-wrapper">
-                    <a href="https://wa.me/85265731686" target="_blank" class="social-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.74.45 3.42 1.31 4.92L2 22l5.31-1.39c1.45.79 3.09 1.21 4.73 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m5.46 14.1c-.26.74-1.53 1.41-2.11 1.47-.58.06-1.14.28-3.41-.66-2.73-1.12-4.46-3.92-4.6-4.11-.13-.18-1.1-1.46-1.1-2.79 0-1.32.69-1.97.94-2.23.25-.26.55-.32.74-.32.18 0 .37 0 .52.02.16.02.39-.06.6.43.21.51.72 1.76.78 1.88.06.13.11.28.02.46-.08.18-.13.29-.26.44-.13.14-.28.32-.39.43-.13.13-.26.27-.11.53.15.26.66 1.11 1.43 1.8.99.88 1.83 1.15 2.09 1.28.26.13.41.11.56-.06.15-.18.66-.76.84-1.02.18-.26.36-.22.59-.13.23.09 1.49.71 1.75.84.26.13.43.2.49.31.06.11.06.66-.2 1.4z"/></svg>
-                    </a>
-                    <span class="tooltip">
-                        <span class="en">WhatsApp</span>
-                        <span class="zh">WhatsApp</span>
-                    </span>
-                </div>
+                <a href="mailto:chinming_he@smail.nju.edu.cn" class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </div>
+                    <span class="contact-label">Email</span>
+                    <span class="contact-info">chinming_he@smail.nju.edu.cn</span>
+                </a>
 
+                <a href="https://wa.me/85265731686" target="_blank" class="contact-item">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    </div>
+                    <span class="contact-label">WhatsApp</span>
+                    <span class="contact-info">+852 6573 1686</span>
+                </a>
+
+                <div class="contact-item" style="cursor: pointer;">
+                    <div class="contact-icon">
+                        <svg viewBox="0 0 576 512" fill="currentColor"><path d="M385.2 167.6c6.4 0 12.6 .3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13.5 104.4 13.5 194.6c0 54.2 32 101.5 82.8 131.8-1.9 5.3-5.2 14.5-5.2 14.5s-6.6 20.3-8.5 27.6c-1.5 5.5 1.6 7.4 5.9 4.3 0 0 31.6-17.7 48.7-27.4 17.5 4.6 36.3 7 55.6 7 2.3 0 4.6-.1 6.8-.1-12.8-17.8-20.3-39.7-20.3-63.3 0-61.9 50.2-111.4 112.5-111.4h93.4zm-225-45.3c15.5 0 28.2 12.7 28.2 28.3 0 15.6-12.7 28.3-28.2 28.3-15.5 0-28.2-12.7-28.2-28.3 0-15.6 12.7-28.3 28.2-28.3zm122 0c15.5 0 28.2 12.7 28.2 28.3 0 15.6-12.7 28.3-28.2 28.3-15.5 0-28.2-12.7-28.2-28.3 0-15.6 12.7-28.3 28.2-28.3zM562.5 317.5c0-59.4-56.4-107.5-125.9-107.5-69.5 0-125.9 48.1-125.9 107.5 0 59.4 56.4 107.5 125.9 107.5 18 0 35.5-3.8 51.5-10.7 15.1 8.5 42.6 23.9 42.6 23.9 3.8 2.7 6.6 1.1 5.4-3.7-.6-2.5-6-17.5-7.7-22.3 44.5-26 74.1-66.2 74.1-114.7zm-162-30.8c11 0 20 9 20 20.1 0 11.1-9 20.1-20 20.1-11 0-20-9-20-20.1 0-11.1 9-20.1 20-20.1zm84.4 0c11 0 20 9 20 20.1 0 11.1-9 20.1-20 20.1-11 0-20-9-20-20.1 0-11.1 9-20.1 20-20.1z"/></svg>
+                    </div>
+                    <span class="contact-label">WeChat</span>
+                    <span class="contact-info">hejinmingnju</span>
+                </div>
             </div>
-        </footer>
-
-    </div>
+            
+            <div class="footer-bottom">
+                &copy; 2026 He Jinming. <span class="en">All rights reserved.</span><span class="zh">保留所有权利。</span>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // 控制语言切换的JavaScript函数
+        // Language Toggle Functionality
         function toggleLanguage() {
             const body = document.body;
-            if (body.classList.contains('lang-zh')) {
-                body.classList.remove('lang-zh');
-                body.classList.add('lang-en');
-            } else {
-                body.classList.remove('lang-en');
-                body.classList.add('lang-zh');
-            }
+            const currentLang = body.getAttribute('data-lang');
+            const newLang = currentLang === 'en' ? 'zh' : 'en';
+            body.setAttribute('data-lang', newLang);
+            document.documentElement.lang = newLang;
         }
+
+        // Scroll Reveal Animation Observer
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => { revealOnScroll.observe(reveal); });
+        });
     </script>
 </body>
 </html>
